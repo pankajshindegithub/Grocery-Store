@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/* example global CSS */
+.empty-cart-anim {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float 2.6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%   { transform: translateY(0) scale(1); }
+  40%  { transform: translateY(-8px) scale(1.02); }
+  70%  { transform: translateY(-4px) scale(1.01); }
+  100% { transform: translateY(0) scale(1); }
+}
