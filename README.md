@@ -1,16 +1,135 @@
-# React + Vite
+# Grocery Store (Simple)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple, responsive grocery store web app built with React and Redux Toolkit. It demonstrates a clean product listing, filters, a cart powered by Redux Toolkit, mobile-friendly filter drawer, and toast notifications for user actions.
 
-Currently, two official plugins are available:
+> Built as a learning project — perfect for practising React, Redux Toolkit, and Tailwind CSS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* Product listing with search, category filter and price range
+* Responsive design with a desktop sidebar and a mobile filter drawer
+* Add to cart using Redux Toolkit (`addItem`, `updateQty`, `removeItem`)
+* Cart drawer with increase / decrease item quantity and subtotal calculation
+* Empty-cart friendly animation and a clear CTA to continue shopping
+* Toast notifications for add / remove actions (react-toastify)
+* Clean folder structure and reusable components (ProductCard, CartComp, FilterBar)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🧭 Tech stack
+
+* React
+* Redux Toolkit
+* React Router
+* Tailwind CSS (or plain CSS — adjust as needed)
+* react-toastify (notifications)
+* lucide-react / react-icons (icons)
+
+---
+
+## 🚀 Getting started
+
+### Prerequisites
+
+* Node.js v16+ and npm or yarn installed
+
+### Install
+
+```bash
+# clone repository
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
+
+# using npm
+npm install
+
+# using yarn
+# yarn
+```
+
+### Run locally
+
+```bash
+# start dev server
+npm run dev
+# or
+# yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) (or the port your dev server uses).
+
+### Build for production
+
+```bash
+npm run build
+# or
+# yarn build
+```
+
+---
+
+## 📁 Suggested folder structure
+
+```
+src/
+├─ assets/           # images, icons, SVGs
+├─ components/       # ProductCard, CartComp, FilterBar, Navbar, etc.
+├─ pages/            # Shop, Home, About
+├─ Redux/            # cartSlice.js, store.js
+├─ Utils/            # Data.js (sample products)
+├─ App.jsx
+└─ index.jsx
+```
+
+---
+
+## 🧩 Redux slice (example)
+
+A small example of the `cartSlice` used in the project:
+
+```js
+// src/Redux/cartSlice.js
+import { createSlice } from '@reduxjs/toolkit'
+
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState: { cart: [] },
+  reducers: {
+    addItem(state, action) {
+      const item = action.payload
+      const existing = state.cart.find(i => i.id === item.id)
+      if (existing) existing.qty = (existing.qty ?? 1) + (item.qty ?? 1)
+      else state.cart.push({ ...item, qty: item.qty ?? 1 })
+    },
+    updateQty(state, action) {
+      const { id, qty } = action.payload
+      const item = state.cart.find(i => i.id === id)
+      if (item) item.qty = qty
+    },
+    removeItem(state, action) {
+      state.cart = state.cart.filter(i => i.id !== action.payload)
+    },
+    clearCart(state) { state.cart = [] }
+  }
+})
+
+export const { addItem, updateQty, removeItem, clearCart } = cartSlice.actions
+export default cartSlice.reducer
+```
+
+---
+
+## ✅ Tips & Notes
+
+* Keep a consistent quantity field name (`qty`) across the app — don’t reuse `unit` for numeric counts.
+* Use Redux DevTools to inspect actions and state while debugging.
+* Persist cart to `localStorage` if you want items to survive reload. Example: subscribe to store and write `localStorage.setItem('cart', JSON.stringify(store.getState().cart))`.
+
+---
+
+## ✉️ Contact
+
+
+`Made with ❤️ by Pankaj`
