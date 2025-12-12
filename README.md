@@ -129,7 +129,4 @@ export default cartSlice.reducer
 
 ---
 
-## ✉️ Contact
-
-
 `Made with ❤️ by Pankaj`
